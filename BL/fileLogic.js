@@ -1,8 +1,11 @@
+const path = require("path");
 const fs = require("fs");
 
+const fileDetails = (path1) => {
+  const stat = fs.statSync(path.join(__dirname, `../${path1}`));
+  return stat;
+};
 const renameFile = (path, files) => {
-  console.log("🚀 ~ file: fileLogic.js ~ line 4 ~ renameFile ~ files", files);
-  console.log("🚀 ~ file: fileLogic.js ~ line 4 ~ renameFile ~ path", path);
   for (const file of files) {
     fs.rename(
       `${path}/${file.filename}`,
@@ -44,4 +47,21 @@ const deleteFile = (filePath) => {
   fs.unlinkSync(`${filePath}`);
   return { message: "success" };
 };
-module.exports = { create, read, rename, update, deleteFile, renameFile };
+const download = (path) => {
+  const filePath = fs.createWriteStream(path);
+  res.pipe(filePath);
+  filePath.on("finish", () => {
+    filePath.close();
+    console.log("Download Completed");
+  });
+};
+module.exports = {
+  download,
+  create,
+  read,
+  rename,
+  update,
+  deleteFile,
+  renameFile,
+  fileDetails,
+};
