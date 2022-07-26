@@ -52,6 +52,7 @@ router.put("/update/:fileName", (req, res) => {
 });
 router.put("/rename", (req, res) => {
   try {
+    console.log(req.body);
     res.send(fileLogic.rename(req.body.oldPath, req.body.newPath));
   } catch (error) {
     res.status(error.code || 400).send({ message: error.message });
